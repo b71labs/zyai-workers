@@ -66,7 +66,7 @@ All workers are deployed via Cloudflare dashboard. Each worker requires:
 
 | Binding | Type | Description |
 |---------|------|-------------|
-| `DB` | D1 Database | eip-brain database |
+| `DB` | D1 Database | ZyAI database |
 | `AI` | Workers AI | Cloudflare AI binding |
 | `PIPELINE_SECRET` | Secret | Pipeline auth key |
 | `OPENROUTER_KEY` | Secret | OpenRouter API key |
