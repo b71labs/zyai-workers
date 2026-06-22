@@ -2,7 +2,7 @@
 
 > AI-powered security & developer knowledge base. Web2/Web3 security, onchain analysis, CVE tracking — built on Cloudflare.
 
-**Live:** [zyai.org](https://zyai.org) · **Telegram:** [@zyai_bot](https://t.me/zyai_bot)
+**Live:** [zyai.org](https://zyai.org) · **Telegram:** [@zyai_bot](https://t.me/zyorgbot)
 
 ---
 
