@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZyAI</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+[data-theme="dark"] {
+  --bg: #1c1c1e; --surface: #2c2c2e; --border: #3a3a3c;
+  --text: #f5f5f7; --text2: #98989d; --muted: #636366;
+  --green: #4ade80; --green-bg: #1c2e22; --green-border: #2d4a35;
+  --user-bg: #3a3a3c; --btn-text: #0a0a0a;
+  --code-bg: #141416; --scrollbar: #3a3a3c;
+}
+[data-theme="light"] {
+  --bg: #f5f5f7; --surface: #fff; --border: #e5e5e5;
+  --text: #111; --text2: #666; --muted: #bbb;
+  --green: #16a34a; --green-bg: #f0fdf4; --green-border: #bbf7d0;
+  --user-bg: #e5e5e5; --btn-text: #fff;
+  --code-bg: #f4f4f4; --scrollbar: #ddd;
+}
+
+body {
+  width: 380px;
+  height: 560px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* TOPBAR */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.brand img { width: 22px; height: 22px; border-radius: 4px; }
+.brand em { font-style: normal; color: var(--green); }
+.topbar-actions { display: flex; gap: 6px; }
+.icon-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  font-size: 13px;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.icon-btn:hover { color: var(--text); border-color: var(--border); }
+
+/* MESSAGES */
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.messages::-webkit-scrollbar { width: 3px; }
+.messages::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 4px; }
+
+.empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  padding: 1rem;
+}
+.empty-logo { font-size: 28px; font-weight: 900; letter-spacing: -0.04em; }
+.empty-logo em { font-style: normal; color: var(--green); }
+.empty-sub { font-size: 11px; color: var(--muted); line-height: 1.5; }
+.chips { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; margin-top: 8px; }
+.chip {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  font-size: 10px;
+  font-family: inherit;
+  padding: 4px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.chip:hover { border-color: var(--green); color: var(--green); }
+
+.msg { display: flex; flex-direction: column; gap: 2px; animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:none} }
+.msg-user { align-items: flex-end; }
+.msg-ai { align-items: flex-start; }
+.msg-label { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; padding: 0 3px; }
+.bubble {
+  max-width: 90%;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.6;
+  word-break: break-word;
+}
+.bubble-user { background: var(--user-bg); border: 1px solid var(--border); border-bottom-right-radius: 3px; }
+.bubble-ai { background: var(--green-bg); border: 1px solid var(--green-border); border-bottom-left-radius: 3px; }
+.bubble-ai.loading { color: var(--muted); }
+.bubble-ai.loading::after { content: '●●●'; animation: dots 1.2s infinite; display: inline-block; }
+@keyframes dots { 0%{opacity:0.2} 50%{opacity:1} 100%{opacity:0.2} }
+.bubble-ai code { background: var(--code-bg); border-radius: 3px; padding: 1px 4px; font-size: 11px; font-family: monospace; color: var(--green); }
+.bubble-ai strong { font-weight: 600; }
+.bubble-ai ul { padding-left: 1rem; margin: 4px 0; }
+.bubble-ai li { margin: 2px 0; }
+
+/* INPUT */
+.input-area {
+  flex-shrink: 0;
+  padding: 8px 12px 10px;
+  border-top: 1px solid var(--border);
+}
+.input-box {
+  display: flex;
+  align-items: flex-end;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.input-box:focus-within { border-color: var(--green); }
+.chat-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 13px;
+  padding: 9px 12px;
+  outline: none;
+  font-family: inherit;
+  resize: none;
+  max-height: 80px;
+  line-height: 1.5;
+}
+.chat-input::placeholder { color: var(--muted); }
+.send-btn {
+  background: var(--green);
+  border: none;
+  color: var(--btn-text);
+  font-size: 14px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  border-radius: 8px;
+  margin: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+.send-btn:hover { opacity: 0.85; }
+.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.open-web {
+  text-align: center;
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 5px;
+  cursor: pointer;
+}
+.open-web:hover { color: var(--green); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <img src="https://pub-7dbec42453ff40268e3c576af7817563.r2.dev/logo.png" alt="ZyAI"/>
+    Zy<em>AI</em>
+  </div>
+  <div class="topbar-actions">
+    <button class="icon-btn" id="theme-btn" onclick="toggleTheme()" title="Theme">☀</button>
+    <button class="icon-btn" onclick="clearChat()" title="New chat">✕</button>
+  </div>
+</div>
+
+<div class="messages" id="messages">
+  <div class="empty" id="empty">
+    <div class="empty-logo">Zy<em>AI</em></div>
+    <div class="empty-sub">Security-focused developer AI.<br>Ask about Web2/Web3, security, code.</div>
+    <div class="chips">
+      <button class="chip" onclick="suggest(this)">What is reentrancy?</button>
+      <button class="chip" onclick="suggest(this)">Explain SQL injection</button>
+      <button class="chip" onclick="suggest(this)">What is MEV?</button>
+      <button class="chip" onclick="suggest(this)">How does Wagmi work?</button>
+    </div>
+  </div>
+</div>
+
+<div class="input-area">
+  <div class="input-box">
+    <textarea class="chat-input" id="input" placeholder="Ask anything..." rows="1"></textarea>
+    <button class="send-btn" id="send-btn" onclick="send()">↑</button>
+  </div>
+  <div class="open-web" onclick="openWeb()">Open full version at zyai.org →</div>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>

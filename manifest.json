@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "ZyAI",
+  "version": "1.0.0",
+  "description": "AI-powered security & developer assistant. Ask anything about Web2/Web3 security, smart contracts, and more.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ZyAI"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://zyai.org/*"
+  ]
+}
