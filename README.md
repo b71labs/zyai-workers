@@ -29,7 +29,7 @@ zyai.org (Cloudflare Worker)
 ├── /api/auth        — User authentication
 └── /                — Web UI
 
-Cloudflare D1 (eip-brain)
+Cloudflare D1 
 ├── knowledge        — 1500+ developer & security entries
 ├── knowledge_fts    — Full-text search index
 ├── users            — User accounts
