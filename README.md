@@ -42,7 +42,7 @@ zyai.org (Cloudflare Worker)
 └── /                  — Web UI
 
 Cloudflare D1 (zy-brain)
-├── knowledge        — 400+ developer & security entries
+├── knowledge        — 3000+ developer & security entries
 ├── knowledge_fts    — Full-text search index
 ├── users            — User accounts
 ├── chats            — Chat history
