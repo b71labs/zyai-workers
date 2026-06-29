@@ -78,17 +78,6 @@ Workers
 | `cve` | Real-time CVE entries |
 | `defi-hack` | DeFi hack analysis |
 
-## Subscription Plans
-
-| Plan | Price | Chats/Day | API Calls/Day |
-|------|-------|-----------|---------------|
-| Free | $0 | 20 | 100 |
-| Pro | $9/mo | 500 | 1,000 |
-| Developer | $19/mo | Unlimited | 10,000 |
-
-**Payment:** USDC on Base, Optimism, Arbitrum, or HyperEVM  
-**Treasury:** `0x9651E0CE4FbBc29C6915424c10A9B32FB995748D`
-
 ## Developer API
 
 ```bash
