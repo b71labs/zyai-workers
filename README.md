@@ -41,7 +41,7 @@ zyai.org (Cloudflare Worker)
 ├── /api/profile       — User profile & stats
 └── /                  — Web UI
 
-Cloudflare D1 (eip-brain)
+Cloudflare D1 (zy-brain)
 ├── knowledge        — 400+ developer & security entries
 ├── knowledge_fts    — Full-text search index
 ├── users            — User accounts
